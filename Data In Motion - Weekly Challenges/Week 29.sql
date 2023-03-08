@@ -22,3 +22,29 @@ SELECT user_id
 FROM tweets
 GROUP BY user_id, tweet_date
 ORDER BY user_id, tweet_date
+
+/*
+You are given the tables below containing information on Robinhood trades and users. Write a query to list the top three cities that have the most completed trade orders in descending order.
+
+Output the city and number of orders.
+
+trades Table:
+Column Name     Type
+order_id	    integer
+user_id     	integer
+price       	decimal
+quantity	    integer
+status	        string('Completed' ,'Cancelled')
+timestamp	    datetime
+
+*/
+
+SELECT city
+  , COUNT(*) as total_orders
+FROM trades t
+JOIN users u
+  ON t.user_id = u.user_id
+WHERE status = 'Completed'
+GROUP BY city
+ORDER BY total_orders DESC
+LIMIT 3
